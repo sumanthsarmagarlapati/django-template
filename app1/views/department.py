@@ -21,6 +21,8 @@ def createDepartment(request):
                 {"message": "Creation Failed", "error": departmentSerializer.errors},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+            
+        # departmentSerializer.save() // also there Centralizes validation + creation but for leraning purpose we use manual operations
 
         Department.objects.create(
             name=departmentSerializer.validated_data["name"],
@@ -37,6 +39,7 @@ def getDepartmentDetails(request):
         querySerializer=CommonPaginationSerializer(data=request.query_params)
         querySerializer.is_valid(raise_exception=True)   
         params=querySerializer.validated_data
+        print("PRAMS",params)
         print("request.query_params:", request.query_params)
         print("dict:", request.query_params.dict())
         
