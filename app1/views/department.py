@@ -21,7 +21,7 @@ def createDepartment(request):
                 {"message": "Creation Failed", "error": departmentSerializer.errors},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-            
+
         # departmentSerializer.save() // also there Centralizes validation + creation but for leraning purpose we use manual operations
 
         Department.objects.create(
@@ -36,15 +36,25 @@ def createDepartment(request):
 @api_view(["GET"])
 def getDepartmentDetails(request):
     try:
-        querySerializer=CommonPaginationSerializer(data=request.query_params)
-        querySerializer.is_valid(raise_exception=True)   
-        params=querySerializer.validated_data
-        print("PRAMS",params)
+        querySerializer = CommonPaginationSerializer(data=request.query_params)
+        querySerializer.is_valid(raise_exception=True)
+        params = querySerializer.validated_data
+        print("PRAMS", params)
         print("request.query_params:", request.query_params)
         print("dict:", request.query_params.dict())
-        
+
         departments = Department.objects.all()
-        getDepartments = GetDepartmentSerializer(departments, many=True)
+
+        departments.filter(active=params.get("active", True))
+        departments.filter(order=params.get("order", "ASC"))
+        departments.filter(order_by=params.get("order_by", "id"))
+        page = params.get("page", 1)
+        limit = params.get("limit", 1)
+        start = (page - 1) * limit
+        end = start + page
+        total_count = departments.count()
+        paginated_records = departments[start:end]
+        getDepartments = GetDepartmentSerializer(paginated_records, many=True)
         return JsonResponse(
             {
                 "data": getDepartments.data,
@@ -59,22 +69,20 @@ def getDepartmentDetails(request):
 
 @api_view(["PATCH"])
 def updateDepartmentDetails(request, id):
-    print("IDDDDDDDDDDDDDDDDDDDDDDDD",id)
     try:
         department = Department.objects.get(id=id)
 
-        updatedSerilizer = CreateDepartmentSerializer(department,data=request.data,partial=True)
+        updatedSerilizer = CreateDepartmentSerializer(
+            department, data=request.data, partial=True
+        )
         if not updatedSerilizer.is_valid():
             return JsonResponse(
-                {
-                    "message": "Validation failed",
-                    "errors": updatedSerilizer.errors
-                },
-                status=status.HTTP_400_BAD_REQUEST
+                {"message": "Validation failed", "errors": updatedSerilizer.errors},
+                status=status.HTTP_400_BAD_REQUEST,
             )
-            
+
         Department.objects.filter(id=id).update(**updatedSerilizer.validated_data)
-        
+
         return JsonResponse({"message": "Department updated successfully"}, status=201)
 
     except Exception as e:
