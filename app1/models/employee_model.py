@@ -1,8 +1,8 @@
 from decimal import Decimal
 from django.db import models
 from .department_model import Department
-from .address_model import Address
-from .tags_model import Tags
+from app2.models.address_model import Address
+from app2.models.tags_model import Tags
 
 class Employee(models.Model):
     id=models.BigAutoField(primary_key=True,db_column='id',editable=False)
