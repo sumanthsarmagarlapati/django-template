@@ -6,7 +6,6 @@ from django.http import JsonResponse
 
 @api_view(["POST"])
 def CreateAddress(request):
-    print("@@@@@@@@@@@@@@@@@@")
     try:
         createSerializer=CreateAddressSerializer(data=request.data)
         if not createSerializer.is_valid():
