@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from app2.models import Tags
 
 
@@ -9,7 +8,13 @@ class CreateTagSerializer(serializers.ModelSerializer):
         model: Tags
 
 
-class GetTagsSerializer(serializer.ModelSerializer):
+class GetTagsSerializer(serializers.ModelSerializer):
     class Meta:
         fields: ["name", "active", "id"]
+        model: Tags
+
+
+class UpdateTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields: ["name", "active"]
         model: Tags
