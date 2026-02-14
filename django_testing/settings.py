@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definitionsss
 
 INSTALLED_APPS = [
+    "easyaudit",
     "rest_framework",
     "app1",
     "app2",
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'easyaudit.middleware.easyaudit.EasyAuditMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
