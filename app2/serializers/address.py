@@ -21,7 +21,7 @@ class CreateAddressSerializer(serializers.ModelSerializer):
 
 class GetAddressSerializer(serializers.ModelSerializer):
     class Meta:
-        fields=["id","line","city"]
+        fields=["id","line","city","active"]
         model=Address
 
 class UpdateAddressSerializer(serializers.ModelSerializer):

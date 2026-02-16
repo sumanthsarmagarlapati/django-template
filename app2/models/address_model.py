@@ -7,6 +7,7 @@ class Address(models.Model):
     )
     line = models.CharField(max_length=100, null=False, blank=False)
     city = models.CharField(max_length=100, null=False, blank=False)
+    active=models.BooleanField(default=True)
 
     class Meta:
         db_table = "address"

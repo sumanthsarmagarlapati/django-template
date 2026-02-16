@@ -1,8 +1,9 @@
-from django.urls import path,include
-from app1.views import CreateEmployee
+from django.urls import  path
+
+from app1.views import CreateEmployee, GetEmployees, UpdateEmployee
 
 urlpatterns=[
     path("create",CreateEmployee,name="create_employee"),
-    path("create",GetEmployees,name="create_employee"),
-    path("create",UpdateEmployee,name="create_employee"),
+    path("update/<int:id>",UpdateEmployee,name="create_employee"),
+    path("",GetEmployees,name="create_employee"),
 ]
