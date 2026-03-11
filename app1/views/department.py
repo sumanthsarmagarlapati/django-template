@@ -46,7 +46,7 @@ def getDepartmentDetails(request):
         page = params.get("page")
         limit = params.get("limit")
         search = params.get("search")
-
+        print("params", params)
         departments = Department.objects.all()
         departments = departments.filter(active=params.get("active", True))
         if sort_direction.lower() == "desc":
@@ -67,6 +67,7 @@ def getDepartmentDetails(request):
         total_count = departments.count()
         paginated_records = departments[start:end]
         getDepartments = GetDepartmentSerializer(paginated_records, many=True)
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         return JsonResponse(
             {
                 "data": getDepartments.data,

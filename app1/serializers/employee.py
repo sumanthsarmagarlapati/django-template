@@ -29,4 +29,4 @@ class GetEmployeeSerializer(serializers.ModelSerializer):
     tags =GetTagsSerializer(many=True,read_only=True)
     class Meta:
         model=Employee
-        fields=["id","name","email","salary","department","address","tags"]
+        fields=["id","name","email","salary","department.name","address.name","tags"]

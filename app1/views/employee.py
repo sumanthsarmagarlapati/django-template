@@ -55,6 +55,7 @@ def GetEmployees(request):
             return Response({"message":"Invalid data","error":paginationSerializer.errors},status=status.HTTP_400_BAD_REQUEST)
         
         employee=Employee.objects.all()
+        # employee=employee.select_related("department","address").prefetch_related("tags")
         page=paginationSerializer.validated_data.get("page")
         limit=paginationSerializer.validated_data.get("limit")
         search=paginationSerializer.validated_data.get("search")
